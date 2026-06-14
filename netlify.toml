@@ -1,0 +1,8 @@
+[[edge_functions]]
+  path = "/store/*/product/*"
+  function = "inject-meta"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
