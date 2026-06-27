@@ -291,57 +291,62 @@ export default function Products() {
       </form>
 
       {/* Clean Grid View for Catalog Items */}
-      <h2 className="text-xl font-bold mb-5 text-gray-800">Active Catalog Items</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.map((product) => (
-          <div key={product._id} className="bg-white rounded-xl shadow-xs overflow-hidden flex flex-col justify-between border border-gray-100 transition hover:shadow-md">
-            <div>
-              {product.images?.[0] ? (
-                <img
-                  src={product.images[0]}
-                  alt={product.productName}
-                  className="w-full h-48 sm:h-52 object-cover bg-gray-100"
-                />
-              ) : (
-                <div className="w-full h-48 sm:h-52 bg-gray-100 flex items-center justify-center text-gray-400 text-sm font-medium">
-                  No Image Available
-                </div>
-              )}
-
-              <div className="p-4 sm:p-5">
-                <div className="flex justify-between items-start gap-2 mb-2">
-                  <h2 className="font-bold text-base sm:text-lg text-gray-900 leading-tight truncate">{product.productName}</h2>
-                  <span className="text-[11px] font-semibold bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md whitespace-nowrap shrink-0">
-                    Views: {product.views || 0}
-                  </span>
-                </div>
-                
-                <p className="text-gray-500 text-xs sm:text-sm mb-4 line-clamp-2">{product.description || "No description provided."}</p>
-
-                {Object.keys(product.customFields || {}).length > 0 && (
-                  <div className="border-t border-gray-100 pt-3 space-y-1.5 bg-gray-50/70 -mx-4 sm:-mx-5 -mb-4 sm:-mb-5 p-4 sm:p-5">
-                    {Object.entries(product.customFields).map(([key, value]) => (
-                      <p key={key} className="text-xs text-gray-600 truncate">
-                        <strong className="text-gray-500 font-medium uppercase tracking-wider text-[10px] block mb-0.5">{key}</strong> 
-                        <span className="text-gray-800 font-medium">{value}</span>
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </div>
+     {/* Clean Grid View for Catalog Items */}
+<h2 className="text-xl font-bold mb-5 text-gray-800">Active Catalog Items</h2>
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {products.map((product) => (
+    <div key={product._id} className="bg-white rounded-xl shadow-xs overflow-hidden flex flex-col justify-between border border-gray-100 transition hover:shadow-md">
+      <div>
+        {/* Container with a neutral background to look elegant with uncropped images */}
+        <div className="w-full h-48 sm:h-52 bg-gray-50 flex items-center justify-center overflow-hidden border-b border-gray-100 p-2">
+          {product.images?.[0] ? (
+            <img
+              src={product.images[0]}
+              alt={product.productName}
+              /* CHANGED object-cover TO object-contain to prevent top/bottom cutting */
+              className="max-w-full max-h-full object-contain"
+            />
+          ) : (
+            <div className="text-gray-400 text-sm font-medium">
+              No Image Available
             </div>
+          )}
+        </div>
 
-            <div className="p-4 border-t border-gray-100 bg-gray-50/50 flex justify-end">
-              <button
-                onClick={() => deleteProduct(product._id)}
-                className="text-xs font-semibold text-red-600 hover:text-red-800 transition-colors p-1"
-              >
-                Delete Asset
-              </button>
-            </div>
+        <div className="p-4 sm:p-5">
+          <div className="flex justify-between items-start gap-2 mb-2">
+            <h2 className="font-bold text-base sm:text-lg text-gray-900 leading-tight truncate">{product.productName}</h2>
+            <span className="text-[11px] font-semibold bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md whitespace-nowrap shrink-0">
+              Views: {product.views || 0}
+            </span>
           </div>
-        ))}
+          
+          <p className="text-gray-500 text-xs sm:text-sm mb-4 line-clamp-2">{product.description || "No description provided."}</p>
+
+          {Object.keys(product.customFields || {}).length > 0 && (
+            <div className="border-t border-gray-100 pt-3 space-y-1.5 bg-gray-50/70 -mx-4 sm:-mx-5 -mb-4 sm:-mb-5 p-4 sm:p-5">
+              {Object.entries(product.customFields).map(([key, value]) => (
+                <p key={key} className="text-xs text-gray-600 truncate">
+                  <strong className="text-gray-500 font-medium uppercase tracking-wider text-[10px] block mb-0.5">{key}</strong> 
+                  <span className="text-gray-800 font-medium">{value}</span>
+                </p>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
+
+      <div className="p-4 border-t border-gray-100 bg-gray-50/50 flex justify-end">
+        <button
+          onClick={() => deleteProduct(product._id)}
+          className="text-xs font-semibold text-red-600 hover:text-red-800 transition-colors p-1"
+        >
+          Delete Asset
+        </button>
+      </div>
+    </div>
+  ))}
+</div>
     </div>
   );
 }
